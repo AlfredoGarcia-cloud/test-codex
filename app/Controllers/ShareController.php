@@ -43,16 +43,9 @@ final class ShareController extends Controller
             return;
         }
 
-        $folderId = (int) ($_POST['folder_id'] ?? 0);
-        $userId = (int) ($_POST['user_id'] ?? 0);
-        if ($folderId < 1 || $userId < 1) {
-            $_SESSION['error'] = 'Folder dan user wajib dipilih.';
-            $this->redirect('/shares');
-        }
-
         (new Share())->shareFolder(
-            $folderId,
-            $userId,
+            (int) ($_POST['folder_id'] ?? 0),
+            (int) ($_POST['user_id'] ?? 0),
             (int) $_SESSION['user']['id'],
             isset($_POST['can_read']),
             isset($_POST['can_create']),
@@ -60,7 +53,7 @@ final class ShareController extends Controller
             isset($_POST['can_delete'])
         );
 
-        ActivityLogger::log((int) $_SESSION['user']['id'], 'update', 'folder_share', $folderId, 'Update share folder');
+        ActivityLogger::log((int) $_SESSION['user']['id'], 'update', 'folder_share', (int) ($_POST['folder_id'] ?? 0), 'Update share folder');
         $_SESSION['success'] = 'Share folder berhasil disimpan.';
         $this->redirect('/shares');
     }
@@ -74,23 +67,16 @@ final class ShareController extends Controller
             return;
         }
 
-        $archiveId = (int) ($_POST['archive_id'] ?? 0);
-        $userId = (int) ($_POST['user_id'] ?? 0);
-        if ($archiveId < 1 || $userId < 1) {
-            $_SESSION['error'] = 'Arsip dan user wajib dipilih.';
-            $this->redirect('/shares');
-        }
-
         (new Share())->shareArchive(
-            $archiveId,
-            $userId,
+            (int) ($_POST['archive_id'] ?? 0),
+            (int) ($_POST['user_id'] ?? 0),
             (int) $_SESSION['user']['id'],
             isset($_POST['can_read']),
             isset($_POST['can_update']),
             isset($_POST['can_delete'])
         );
 
-        ActivityLogger::log((int) $_SESSION['user']['id'], 'update', 'archive_share', $archiveId, 'Update share arsip');
+        ActivityLogger::log((int) $_SESSION['user']['id'], 'update', 'archive_share', (int) ($_POST['archive_id'] ?? 0), 'Update share arsip');
         $_SESSION['success'] = 'Share arsip berhasil disimpan.';
         $this->redirect('/shares');
     }
