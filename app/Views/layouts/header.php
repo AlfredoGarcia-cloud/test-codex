@@ -9,7 +9,8 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
 <div class="min-h-screen">
-  <nav class="bg-white border-b p-4 flex gap-4">
+  <?php if (!empty($_SESSION['user'])): ?>
+  <nav class="bg-white border-b p-4 flex gap-4 flex-wrap">
     <a href="/dashboard">Dashboard</a>
     <a href="/folders">Folder</a>
     <a href="/archives">Arsip</a>
@@ -20,4 +21,5 @@
     <a href="/users">Users</a>
     <a href="/logout" class="ml-auto text-red-600">Logout</a>
   </nav>
+  <?php endif; ?>
   <main class="p-6">
